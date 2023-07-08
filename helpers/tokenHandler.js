@@ -11,9 +11,9 @@ const generateNewToken = async (userId) => {
   const token = randomstring.generate({ length: 32, charset: 'alphanumeric' });
 
   const record = {
-    user: userId,
-    token: token,
-    expires: expiryDate,
+    USER_ID: userId,
+    TOKEN: token,
+    EXPIRY_DATE: expiryDate,
   };
 
   await updateTokens(userId, record);
@@ -40,7 +40,7 @@ const updateTokens = async (userId, newData) => {
 
 const checkToken = async (userId, token) => {
   const tokens = await readTokensFromFile(tokensFilePath);
-  const foundToken = tokens.find((row) => row.user === userId && row.token === token);
+  const foundToken = tokens.find((row) => row.USER_ID === userId && row.TOKEN === token);
   return foundToken || false;
 };
 

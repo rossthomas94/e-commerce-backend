@@ -1,4 +1,4 @@
-const {createNewUser, getAllUsers, getUserById, validateUserData,updateUser, deleteUser, getUserByEmail, checkPasswords} = require('../services/users');
+const {createNewUser, getAllUsers, getUserById, validateUserData, updateUser, deleteUser, getUserByEmail, checkPasswords, getToken} = require('../services/users');
 
 
 
@@ -56,7 +56,10 @@ const updateUserById = async (req, res) => {
     if (!user) {
       return res.status(404).send('User not found');
     }
-    const updatedUserData = await updateUser(userId);
+    const { key1, key2, ...updatedBody } = req.body;
+
+    const updatedUserData = await updateUser(updatedBody, userId);
+    console.log(updatedUserData)
     res.status(200).send(updatedUserData);
   } catch (error) {
     res.status(500).send({
@@ -90,8 +93,11 @@ const attempLogin =  async (req, res) => {
     const {PersonID, password} = await getUserByEmail(email); 
     const login = await checkPasswords(password, req.body.password)
     if (!login) return res.status(404).send('Password is incorrect');
-    // generate a token and add it to the csv with personID, token and expiration
-    res.status(200).send(PersonID);
+    const token = await getToken(PersonID)
+    res.status(200).json({
+      userId: PersonID,
+      token: token
+    });  
   } catch (error) {
     res.status(500).send({
       status: 'error',

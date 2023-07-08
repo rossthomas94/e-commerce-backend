@@ -1,5 +1,6 @@
-const {validateEmail, checkUserCred,  validatePassword ,securePassword, matchPasswords} = require('../helpers/userValidation.js')
+const {validateEmail, checkUserCred,  validatePassword ,securePassword, matchPasswords, updateTime} = require('../helpers/userValidation.js')
 const {insertNewUser, selectAllUsers, selectUserByUserId, updateUserById, deleteUserById, getUserIdByEmail } = require('../helpers/sqlController.js');
+const {generateNewToken} = require('../helpers/tokenHandler.js')
 
 
 const {NewUserObject, DeleteUser} = require('../models/user')
@@ -40,7 +41,10 @@ const getUserById = async (id) => {
 }
 
 const updateUser = async (newData, id) => {
-    const updatedUser = await updateUserById(newData, id)
+    console.log(newData)
+    const updatedData = updateTime(newData)
+    console.log(updatedData)
+    const updatedUser = await updateUserById(updatedData, id)
     return updatedUser
 }
 
@@ -55,6 +59,11 @@ const getUserByEmail = async (email) => {
     return userId
 }
 
+const getToken = async (userId) => {
+    const token = generateNewToken(userId)
+    return token
+}
+
 module.exports = {
     createNewUser,
     getAllUsers,
@@ -63,5 +72,6 @@ module.exports = {
     updateUser,
     deleteUser,
     getUserByEmail,
-    checkPasswords
+    checkPasswords,
+    getToken
 };

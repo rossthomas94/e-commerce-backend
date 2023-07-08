@@ -15,3 +15,16 @@ CREATE TABLE userInfo.user (
     modifiedAt DATETIME,
     deletedAccount BOOLEAN
 );
+
+
+CREATE TABLE userInfo.userAddress (
+addressId varchar(100),
+  PersonID varchar(100),
+  houseNumber VARCHAR(50) NOT NULL,
+  streetName VARCHAR(100) NOT NULL,
+  city VARCHAR(100) NOT NULL,
+  postcode VARCHAR(10),
+  insertedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  isPrimaryAddress BOOLEAN NOT NULL DEFAULT 0,
+  addressNickname VARCHAR(100),
+);

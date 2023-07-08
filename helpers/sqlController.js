@@ -1,4 +1,4 @@
-const {checkUserName, checkUserEmail, insertUserData, getAllUsers, getUserById, checkId, updateUser, getUserByEmail} = require('./userQueries');
+const {checkUserName, checkUserEmail, insertUserData, getAllUsers, getUserById, checkId, updateUser, getUserByEmail} = require('./queries/userQueries');
 const {runSelectQuery , runInsertQuery, runSelectByQuery, runUpdateUserQuery} = require('./sqlHandler');
 const uuid = require('uuid');
 
