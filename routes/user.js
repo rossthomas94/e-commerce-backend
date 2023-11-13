@@ -5,13 +5,7 @@ const {
   getUserByUserId,
   updateUserById,
   deleteUserById,
-  createUser
 } = require('../controllers/user');
-
-
-router.route('/')
-  .post(createUser);
-
 
 router.route('/:userId')
   .get(getUserByUserId)

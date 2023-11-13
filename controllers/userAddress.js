@@ -1,3 +1,6 @@
+const {createNewUserAddress} = require('../services/userAddress');
+
+
 const getUserAddressesByUserId = async (req, res) => {
     try {
         res.status(200).send();
@@ -10,7 +13,9 @@ const getUserAddressesByUserId = async (req, res) => {
 }
 const createUserAddress = async (req, res) => {
     try {
-        res.status(200).send();
+        const userId = req.params.userId;
+        const insertAddress = createNewUserAddress(userId, req.body)
+        res.status(200).send(insertAddress);
         } catch (error) {
         res.status(500).send({
           status: 'error',
