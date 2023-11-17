@@ -7,7 +7,6 @@ const getUserAddressesByUserId = async (req, res) => {
       const addresses = await getAllUserIdAddress(userId)
         res.status(200).send(addresses);
         } catch (error) {
-          console.log('error')
         res.status(500).send({
           status: 'error',
           message: error.message
@@ -45,7 +44,6 @@ const updateUserAddressByAddressId = async (req, res) => {
       const preAddress = await getAddressByAId(addressId);
       const changeRequest = req.body
       const update = await updateUserAddressByaId(userId, addressId, preAddress, changeRequest);
-      console.log(update)
         res.status(200).send(update);
         } catch (error) {
         res.status(500).send({

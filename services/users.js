@@ -41,9 +41,7 @@ const getUserById = async (id) => {
 }
 
 const updateUser = async (newData, id) => {
-    console.log(newData)
     const updatedData = updateTime(newData)
-    console.log(updatedData)
     const updatedUser = await updateUserById(updatedData, id)
     return updatedUser
 }

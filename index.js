@@ -10,6 +10,8 @@ const loginRouter = require('./routes/login');
 const userAddressRouter = require('./routes/userAddress');
 const paymentRouter = require('./routes/userPayment');
 
+const productManagementRouter = require('./routes/productManagement');
+
 
 const { isAuth, basicAuthLogin, tokenAuth } = require('./middleware/auth');
 
@@ -22,6 +24,7 @@ app.use('/user', tokenAuth, userRouter);
 app.use('/user/address' , tokenAuth, userAddressRouter);
 app.use('/user/payment' , tokenAuth, paymentRouter);
 
+app.use('/productManagement', isAuth, productManagementRouter);
 
 
 const port = 3000;

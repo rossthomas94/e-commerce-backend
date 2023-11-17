@@ -6,7 +6,6 @@ const getUserpaymentesByUserId = async (req, res) => {
       const paymentes = await getAllUserIdPayment(userId)
         res.status(200).send(paymentes);
         } catch (error) {
-          console.log('error')
         res.status(500).send({
           status: 'error',
           message: error.message
@@ -45,7 +44,6 @@ const updateUserpaymentByPaymentId = async (req, res) => {
       const prePayment = await getPaymentByPId(paymentId);
       const changeRequest = req.body
       const update = await updateUserPaymentByPId(userId, paymentId, prePayment, changeRequest);
-      console.log(update)
         res.status(200).send(update);
         } catch (error) {
         res.status(500).send({

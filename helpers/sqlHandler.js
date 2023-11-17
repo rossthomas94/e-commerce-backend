@@ -12,16 +12,15 @@ const sqlConnection = (dbName) => {
   return pool;
 };
   
-  const runInsertQuery = async  ( query, data , type) => {
-    const db = sqlConnection('userInfo');  
+  const runInsertQuery = async  (database,  query, data , type) => {
+    const db = sqlConnection(database);  
     const [result] = await db.query(query, data);
-    console.log(result)
     db.end();
     return `Successful insertion for type ${type}`
   };
 
   const runSelectQuery =  async (database, query) => {
-    const db = await sqlConnection("userInfo");
+    const db = await sqlConnection(database);
     const [rows] = await db.query(query);
     db.end();
     const returnValue = rows
@@ -29,7 +28,6 @@ const sqlConnection = (dbName) => {
   };
 
   const runSelectByQuery = async (database, query) => {
-    console.log(query)
       const db = await sqlConnection(database);
       const [[data]] = await db.query(query);
       db.end();

@@ -150,3 +150,47 @@ curl --location --request DELETE 'http://localhost:3000/user/payment/6695bbf8-d8
 --data-raw '{
     "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
 }'
+
+productManagement/
+get 
+curl --location --request GET 'http://localhost:3000/productManagement/' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+}'
+productManagement/caterogyId
+get
+curl --location --request GET 'http://localhost:3000/productManagement/cat101' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' 
+post
+curl --location --request POST 'http://localhost:3000/productManagement/cat101' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "productName": "testProductOme",
+    "categoryName": "testCatOne",
+    "productDescription":  "this is the first test pruduct enjoy",
+    "image": "imageOne.png",
+    "productPrice": 1.99,
+    "inventory_count": 4
+}'
+
+product/productId route
+get 
+curl --location --request GET 'http://localhost:3000/productManagement/product/266661' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw ''
+patch
+curl --location --request PATCH 'http://localhost:3000/productManagement/product/266661' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "productPrice": 10.99
+}'
+delete
+curl --location --request DELETE 'http://localhost:3000/productManagement/product/266661' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw ''

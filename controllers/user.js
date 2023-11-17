@@ -59,7 +59,6 @@ const updateUserById = async (req, res) => {
     const { key1, key2, ...updatedBody } = req.body;
 
     const updatedUserData = await updateUser(updatedBody, userId);
-    console.log(updatedUserData)
     res.status(200).send(updatedUserData);
   } catch (error) {
     res.status(500).send({

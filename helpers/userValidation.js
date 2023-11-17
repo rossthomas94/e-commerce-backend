@@ -38,10 +38,8 @@ const matchPasswords = async (sentPassword, storedPassword, ) => {
   return match
 }
 const updateTime = (data) => {
-  console.log(data)
   const date = new Date();
   data.modifiedAt = date.toISOString().slice(0, 19).replace('T', ' ');
-  console.log(data)
   return data;
 };
 

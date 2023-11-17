@@ -4,7 +4,6 @@ const uuid = require('uuid');
 
 
 const generateUniqueId = async (table, column) => {
-  console.log('table')
   let unique = false;
   let id;
 
