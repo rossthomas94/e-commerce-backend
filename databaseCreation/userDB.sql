@@ -28,3 +28,16 @@ addressId varchar(100),
   isPrimaryAddress BOOLEAN NOT NULL DEFAULT 0,
   addressNickname VARCHAR(100),
 );
+
+CREATE TABLE userInfo.userPayment (
+paymentId varchar(100),
+  PersonID varchar(100),
+  cardType VARCHAR(50) NOT NULL,
+  cardNumber VARCHAR(100) NOT NULL,
+  expirationDate VARCHAR(100) NOT NULL,
+  billingPostcode VARCHAR(10),
+  cardHolderName VARCHAR(100) NOT NULL,
+  insertedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  isPrimaryPayment BOOLEAN NOT NULL DEFAULT 0,
+  paymentNickname VARCHAR(100)
+);

@@ -96,3 +96,57 @@ curl --location --request DELETE 'http://localhost:3000/user/address/6695bbf8-d8
 --data-raw '{
     "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
 }'
+
+user/payment/userId route
+get
+curl --location --request GET 'http://localhost:3000/user/payment/6695bbf8-d81c-4d68-9b60-1c745e94f49d' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
+}'
+post
+curl --location --request POST 'http://localhost:3000/user/payment/6695bbf8-d81c-4d68-9b60-1c745e94f49d' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d",
+    "cardType":"debit",
+    "cardNumber":"12345678912345",
+    "expirationDate":"01/23",
+    "billingPostcode":"PO124DD",
+    "cardHolderName":"Ross Thomas",
+    "isPrimaryPayment":1,
+    "paymentNickname":"Ross"
+
+}'
+user/payment/userId/primary
+curl --location --request GET 'http://localhost:3000/user/payment/6695bbf8-d81c-4d68-9b60-1c745e94f49d/primary' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
+}'
+user/payment/userId/paymentId route
+get
+curl --location --request GET 'http://localhost:3000/user/payment/6695bbf8-d81c-4d68-9b60-1c745e94f49d/368e599e-8cd2-4bbd-95b8-77516979b6ff' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
+}'
+patch
+curl --location --request PATCH 'http://localhost:3000/user/payment/6695bbf8-d81c-4d68-9b60-1c745e94f49d/368e599e-8cd2-4bbd-95b8-77516979b6ff' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d",
+    "paymentNickname": "tom"
+}'
+delete
+curl --location --request DELETE 'http://localhost:3000/user/payment/6695bbf8-d81c-4d68-9b60-1c745e94f49d/368e599e-8cd2-4bbd-95b8-77516979b6ff' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
+}'

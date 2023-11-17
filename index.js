@@ -8,7 +8,7 @@ const userRouter = require('./routes/user');
 const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const userAddressRouter = require('./routes/userAddress');
-// const paymentRouter = require('./routes/userPayment');
+const paymentRouter = require('./routes/userPayment');
 
 
 const { isAuth, basicAuthLogin, tokenAuth } = require('./middleware/auth');
@@ -20,7 +20,7 @@ app.use('/users', isAuth, usersRouter);
 app.use('/login', basicAuthLogin,  loginRouter);
 app.use('/user', tokenAuth, userRouter);
 app.use('/user/address' , tokenAuth, userAddressRouter);
-// app.use('/user/payment' , tokenAuth, paymentRouter);
+app.use('/user/payment' , tokenAuth, paymentRouter);
 
 
 
