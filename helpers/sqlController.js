@@ -3,16 +3,16 @@ const {runSelectQuery , runInsertQuery, runSelectByQuery, runUpdateUserQuery} = 
 const uuid = require('uuid');
 
 
-const generateUniqueId = async () => {
+const generateUniqueId = async (table, column) => {
+  console.log('table')
   let unique = false;
   let id;
 
   while (!unique) {
     id = uuid.v4();
-    const result = await runSelectQuery("userInfo", checkId(id));
+    const result = await runSelectQuery("userInfo", checkId(table,column, id));
     if (result.length === 0) unique = true;
   }
-
   return id;
 };
 

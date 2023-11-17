@@ -2,7 +2,7 @@ const checkUserName = (userName) => `SELECT userName FROM user WHERE userName LI
 
 const checkUserEmail = (email) => `SELECT email FROM user WHERE email LIKE '%${email}%'`;
 
-const checkId = (id) => `SELECT PersonID FROM user WHERE PersonID LIKE '%${id}%'`;
+const checkId = (table, id) => `SELECT PersonID FROM ${table} WHERE PersonID LIKE '%${id}%'`;
 
 const insertUserData = () =>  'INSERT INTO user SET ?';
 

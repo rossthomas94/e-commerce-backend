@@ -74,17 +74,6 @@ const writeTokensToFile = (filePath, data) => {
   });
 };
 
-// checkToken('dsdsad-4rr56rr-456', 'gl43VodPErfs2anKoLGfiJZcvIDgqgLR')
-//   .then((result) => {
-//     console.log(result);
-//     if (result) {
-//       result.expires = moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss');
-//       updateTokens('dsdsad-4rr56rr-456', result);
-//     }
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
 
   module.exports = {
     updateTokens,

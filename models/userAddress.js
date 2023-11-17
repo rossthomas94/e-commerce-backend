@@ -1,4 +1,4 @@
-class NewAddressObject {
+class NewUserAddressObject {
     constructor(data, personID, addressId) {
       const { houseNumber, streetName, city, postcode, isPrimaryAddress, addressNickname } = data;
       const date = new Date();
@@ -11,15 +11,15 @@ class NewAddressObject {
       this.postcode = postcode;
       this.insertedAt = date.toISOString().slice(0, 19).replace('T', ' ');;
       this.isPrimaryAddress = isPrimaryAddress
-      this.addressNickname = addressNickname
+      this.addressNickname = addressNickname || '' 
     }
   
     static create(data, personID, addressId) {
-      return new NewUserObject(data, personID, addressId);
+      return new NewUserAddressObject(data, personID, addressId);
     }
 };
 
 
 module.exports = {
-    NewAddressObject
+    NewUserAddressObject
 }

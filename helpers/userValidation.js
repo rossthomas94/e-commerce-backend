@@ -5,7 +5,7 @@ const {checkUserNameExists, checkUserEmailExists, generateUniqueId} = require('.
 
 const checkUserCred = async (userEmail, userName) => {
   await Promise.all([checkUserEmailExists(userEmail), checkUserNameExists(userName)]);
-  const id = generateUniqueId();
+  const id = generateUniqueId('user', 'PersonID');
   return id;
 };
 
@@ -15,7 +15,7 @@ const validateEmail =  (email) => {
     return re.test(email);
   };
 
-  const  validatePassword = (password) => {
+  const validatePassword = (password) => {
     const lowercaseRegex = /[a-z]/;
     const uppercaseRegex = /[A-Z]/;
     const numberRegex = /[0-9]/;
@@ -30,7 +30,7 @@ const validateEmail =  (email) => {
 const securePassword = async (password) => {
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  return hashedPassword
+  return hashedPassword;
 }
 
 const matchPasswords = async (sentPassword, storedPassword, ) => {

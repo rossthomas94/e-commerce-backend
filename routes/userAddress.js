@@ -6,12 +6,16 @@ const {
     createUserAddress,
     getUserAddressesByAddressId,
     updateUserAddressByAddressId,
-    deleteUserAddressByAddressId
+    deleteUserAddressByAddressId,
+    getPrimaryAddress
   } = require('../controllers/userAddress');
 
 router.route('/:userId')
   .get(getUserAddressesByUserId)
   .post(createUserAddress)
+
+router.route('/:userId/primary')
+  .get(getPrimaryAddress)
 
 router.route('/:userId/:addressId')
     .get(getUserAddressesByAddressId)

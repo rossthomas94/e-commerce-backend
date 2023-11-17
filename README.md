@@ -43,8 +43,14 @@ curl --location --request DELETE 'http://localhost:3000/user/6695bbf8-d81c-4d68-
 --header 'Content-Type: application/json' \
 --data-raw '{"PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"}'
 
-user/address route
+user/address/userId route
 Get
+curl --location --request GET 'http://localhost:3000/user/address/6695bbf8-d81c-4d68-9b60-1c745e94f49d' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
+}'
 Post
 curl --location --request POST 'http://localhost:3000/user/address/6695bbf8-d81c-4d68-9b60-1c745e94f49d' \
 --header 'Authorization: Bearer XtjNW4Y444oDZSJnLQsVE2GFWtSzNvBo' \
@@ -58,5 +64,35 @@ curl --location --request POST 'http://localhost:3000/user/address/6695bbf8-d81c
     "isPrimaryAddress": 0,
     "addressNickname": "Home"
 }'
-Patch
-Delete
+user/address/userId/primary route
+get
+curl --location --request GET 'http://localhost:3000/user/address/6695bbf8-d81c-4d68-9b60-1c745e94f49d/primary' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
+}'
+user/address/userId/addressId route
+get
+curl --location --request GET 'http://localhost:3000/user/address/6695bbf8-d81c-4d68-9b60-1c745e94f49d/dfe10e81-273b-48fd-bcac-56b23cd42317' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
+}'
+patch
+curl --location --request PATCH 'http://localhost:3000/user/address/6695bbf8-d81c-4d68-9b60-1c745e94f49d/dfe10e81-273b-48fd-bcac-56b23cd42317' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d",
+    "city": "rename city",
+    "addressNickname" : "Mums"
+}'
+delete
+curl --location --request DELETE 'http://localhost:3000/user/address/6695bbf8-d81c-4d68-9b60-1c745e94f49d/0a765140-b1fa-4d6f-8059-76d15afc7732' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "PersonID" : "6695bbf8-d81c-4d68-9b60-1c745e94f49d"
+}'
