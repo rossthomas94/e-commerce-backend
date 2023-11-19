@@ -194,3 +194,35 @@ curl --location --request DELETE 'http://localhost:3000/productManagement/produc
 --header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
 --header 'Content-Type: application/json' \
 --data-raw ''
+
+/productManagement/product/productId/stock
+get
+curl --location --request GET 'http://localhost:3000/productManagement/product/271112/stock' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw ''
+patch
+curl --location --request PATCH 'http://localhost:3000/productManagement/product/271112/stock' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"addStock": 20
+}'
+
+/productManagement/productQuery/search
+get
+curl --location --request GET 'http://localhost:3000/productManagement/productQuery/search' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+{
+    "column": "productPrice",
+    "operator": ">",
+    "value": 5
+},
+{
+    "column": "productPrice",
+    "operator": "<",
+    "value": 10
+}
+]'

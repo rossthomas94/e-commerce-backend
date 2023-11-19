@@ -29,7 +29,7 @@ router.route('/product/:productId/stock')
     .get(showProductStock)
     .patch(updateProductStock);
 
-router.route('/product/search')
+router.route('/productQuery/search')
     .get(filterProducts)
 
 module.exports = router;

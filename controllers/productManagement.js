@@ -1,4 +1,4 @@
-const {getAllCategories, getProductsInCategory, addNewProductToCategoryId, getProductInfo, updateProductInfoWithId, deleteProduct, getProductStockWithId ,filterProductsSearch, validateProduct } = require('../services/productManagement')
+const {getAllCategories, getProductsInCategory, addNewProductToCategoryId, getProductInfo, updateProductInfoWithId, deleteProduct, getProductStockWithId ,filterProductsSearch, validateProductm, updateProductStockService } = require('../services/productManagement')
 
 const showAllCategories = async(req, res) => {
     try {
@@ -55,7 +55,9 @@ const showAllCategories = async(req, res) => {
   const updateProductInfo = async(req, res) => {
     try {
         const productId = req.params.productId
-        const productInfo = await updateProductInfoWithId(productId)
+        const currentProduct = await  getProductInfo(productId);
+        const updateProduct = await req.body;
+        const productInfo = await updateProductInfoWithId(productId, currentProduct, updateProduct)
       res.status(200).send(productInfo);
       } catch (error) {
       res.status(500).send({
@@ -93,8 +95,12 @@ const showAllCategories = async(req, res) => {
 
   const updateProductStock = async(req, res) => {
     try {
-        const productId = req.params.productId
-        const stock = await updateProductStock()
+        const productId = req.params.productId;
+        const {addStock} = req.body;
+        if (typeof addStock !== 'number') throw new Error('invalid addStock value, must be a number');
+        console.log(productId);
+        console.log(addStock);
+        const stock = await updateProductStockService(productId, addStock)
       res.status(200).send(stock);
       } catch (error) {
       res.status(500).send({
@@ -106,7 +112,9 @@ const showAllCategories = async(req, res) => {
 
   const filterProducts = async(req, res) => {
     try {
-        const filteredResult = await filterProductsSearch()
+      console.log(req.body.length)
+      if (!req.body.length >= 1) throw new Error ("No filters selected!!")
+      const filteredResult = await filterProductsSearch(req.body)
       res.status(200).send(filteredResult);
       } catch (error) {
       res.status(500).send({

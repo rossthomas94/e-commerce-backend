@@ -35,6 +35,6 @@ app.listen(port, () => {
 
 cron.schedule('*/1 * * * *', () => {
   removeExpiredTokens();
-});
+}); 
 
 module.exports = app;

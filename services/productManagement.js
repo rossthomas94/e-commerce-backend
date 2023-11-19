@@ -1,5 +1,5 @@
-const {getAllCategoryNamesHelp, getAllProductsInCategory, addNewProductHelp, getProductData, deleteProductData } = require('../helpers/sqlControllerPM')
-const {generatePId} = require('../helpers/validateProduct')
+const {getAllCategoryNamesHelp, getAllProductsInCategory, addNewProductHelp, getProductData, deleteProductData, updateProductData, getCurrentProductStock, updateStockInDB, getFilterd } = require('../helpers/sqlControllerPM')
+const {generatePId, configureFilters} = require('../helpers/validateProduct')
 const {NewProductObject} = require('../models/NewProductObject')
 
 const getAllCategories = async () => {
@@ -25,21 +25,36 @@ const getProductInfo = async (PId) => {
     const productData = getProductData(PId );
     return productData;
 };
-const updateProductInfo = async (PId) => {
-    // const insertData = insertNewUser(PId );
-    // return insertData;
+const updateProductInfoWithId = async (PId, currentProduct, updateProductInfo) => {
+    const newProductInfo = { ...currentProduct};
+    Object.keys(updateProductInfo).forEach(key => {
+        newProductInfo[key] = updateProductInfo[key];
+      });
+    const updateData = updateProductData(PId, newProductInfo);
+    return updateData;
 };
+
 const deleteProduct = async (PId) => {
-    const deletedData = deleteProductData(PId );
+    const deletedData = deleteProductData(PId);
     return deletedData;
 };
-const updateProductStock = async (PId) => {
-    // const insertData = insertNewUser(PId );
-    // return insertData;
+const updateProductStockService = async (PId, newStock) => {
+    const {inventory_count} = await getCurrentProductStock(PId);
+    const updatedValue = inventory_count + newStock;
+    const dataObject = {"inventory_count": updatedValue}
+    const updateStock = await updateStockInDB(PId, dataObject)
+    return updateStock;
 };
-const filterProducts = async () => {
-    // const insertData = insertNewUser(userData );
-    // return insertData;
+
+const filterProductsSearch = async (data) => {
+    const filter = configureFilters(data)
+    const filteredData = getFilterd(filter );
+    return filteredData;
+};
+
+const getProductStockWithId = async (PID) => {
+    const stock = await getCurrentProductStock(PID);
+    return stock;
 };
 
 
@@ -49,8 +64,9 @@ module.exports =  {
     validateProduct,
     addNewProductToCategoryId, 
     getProductInfo, 
-    updateProductInfo, 
+    updateProductInfoWithId, 
     deleteProduct, 
-    updateProductStock,
-    filterProducts 
+    updateProductStockService,
+    filterProductsSearch,
+    getProductStockWithId
 };

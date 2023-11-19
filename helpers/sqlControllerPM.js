@@ -1,4 +1,4 @@
-const  { getAllCategoryNamesQuery, getMiniProductInfo, getProductInfo, deleteProduct,insertNewProduct, updateProductInfo} = require('./queries/productManagementQueries');
+const  { getAllCategoryNamesQuery, getMiniProductInfo, getProductInfo, deleteProduct,insertNewProduct, updateProductInfo, getCurrentStockProduct, checkLowStock, filterQuery} = require('./queries/productManagementQueries');
 const {runSelectQuery , runInsertQuery, runSelectByQuery, runUpdateUserQuery, runDelete} = require('./sqlHandler');
 
 const getAllCategoryNamesHelp = (CId) => {
@@ -26,6 +26,26 @@ const deleteProductData = async (PId) => {
     return result;
 }
 
-module.exports = {getAllCategoryNamesHelp, getAllProductsInCategory, addNewProductHelp, getProductData, deleteProductData}
+const updateProductData = async (PId, newProductInfo) => {
+    const result = await  runUpdateUserQuery('productInfo', updateProductInfo(PId), newProductInfo);
+    return result;
+};
+
+const getCurrentProductStock = async (PId) => {
+    const result = await runSelectByQuery("productInfo",getCurrentStockProduct(PId));
+    return result;
+};
+
+const updateStockInDB = async (PId,stock) => {
+    const result = await  runUpdateUserQuery('productInfo', updateProductInfo(PId), stock);
+    return result;
+};
+
+const getFilterd = async (filters) => {
+    const result = runSelectQuery('productInfo', filterQuery(filters));
+    return result;
+};
+
+module.exports = {getAllCategoryNamesHelp, getAllProductsInCategory, addNewProductHelp, getProductData, deleteProductData, updateProductData, getCurrentProductStock, updateStockInDB, getFilterd}
 
 

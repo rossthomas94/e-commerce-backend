@@ -56,7 +56,7 @@ const updateUserById = async (req, res) => {
     if (!user) {
       return res.status(404).send('User not found');
     }
-    const { key1, key2, ...updatedBody } = req.body;
+    const {...updatedBody} = req.body;
 
     const updatedUserData = await updateUser(updatedBody, userId);
     res.status(200).send(updatedUserData);

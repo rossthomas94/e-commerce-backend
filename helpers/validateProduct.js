@@ -4,6 +4,18 @@ const generatePId = () => {
     return PID;
 };
 
+const configureFilters = (data) => {
+    const conditionString = data.map(({ column, operator, value }) => {
+        if (typeof value === 'string') {
+            return `${column} ${operator} '%${value}%'`;
+        } else {
+            return `${column} ${operator} ${value}`;
+        }
+    }).join(' AND ');
+    return conditionString;
+};
+
 module.exports = {
-    generatePId
+    generatePId,
+    configureFilters
 }

@@ -29,7 +29,7 @@ const updateTokens = async (userId, newData) => {
   const filteredTokens = existingTokens.filter((data) => data.user !== userId);
   updatedTokens.push(...filteredTokens);
 
-  const updatedCsvData = [Object.keys(updatedTokens[0]).join(',')]; // Add headers
+  const updatedCsvData = [Object.keys(updatedTokens[0]).join(',')]; 
 
   const tokenRows = updatedTokens.map((tokenData) => Object.values(tokenData).join(','));
   updatedCsvData.push(...tokenRows);
