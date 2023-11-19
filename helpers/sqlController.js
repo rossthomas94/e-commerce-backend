@@ -44,27 +44,28 @@ const checkUserEmailExists = async (userEmail) => {
     return result 
   };
 
-  const insertNewUser =  (data) => {
-    const result =  runInsertQuery(DB, insertUserData(),  data,  'Create new user');
+  const insertNewUser =  async (data) => {
+    const result =  await runInsertQuery(DB, insertUserData(),  data,  'Create new user');
     return result
   };
 
-  const updateUserById =  (data, id) => {
-    const result =  runUpdateUserQuery(DB, updateUser(id), data);
+  const updateUserById = async (data, id) => {
+    const result =  await runUpdateUserQuery(DB, updateUser(id), data);
     return result
   };
-  const deleteUserById = (id, data) => {
-    const result =  runUpdateUserQuery(DB, updateUser(id), data);
+  const deleteUserById = async (id, data) => {
+    const result =  await runUpdateUserQuery(DB, updateUser(id), data);
     return result
   }
 
-  const getUserIdByEmail = (email) => {
-    const result =  runSelectByQuery(DB, getUserByEmail(email));
+  const getUserIdByEmail = async (email) => {
+    const result =  await runSelectByQuery(DB, getUserByEmail(email));
+    console.log(result)
     return result
   }
 
-  const checkPasswordResetCond = (email, lastName, DOB) => {
-    const result =  runSelectByQuery(DB, passwordReset(email, lastName, DOB));
+  const checkPasswordResetCond = async (email, lastName, DOB) => {
+    const result =  await runSelectByQuery(DB, passwordReset(email, lastName, DOB));
     return result
   };
 

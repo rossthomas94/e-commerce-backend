@@ -54,8 +54,9 @@ const deleteUser = async (id) => {
 
 const getUserByEmail = async (email) => {
     const userId = await getUserIdByEmail(email)
+    if (!userId) throw new Error ("no email address can be found for this email")
     return userId
-}
+};
 
 const getToken = async (userId) => {
     const token = generateNewToken(userId)
@@ -64,7 +65,7 @@ const getToken = async (userId) => {
 
 const checkUserInfo = async (data) => {
     const {email, lastName, DOB} = data;
-   const personId =  checkPasswordResetCond(email, lastName, DOB);
+   const personId = await  checkPasswordResetCond(email, lastName, DOB);
    if (!personId) throw new Error ('Creds dont match any records');
    return personId;
 };
@@ -79,9 +80,9 @@ const createRandonPWD = async () => {
 
 const validatePWD = async (passwords) => {
     
-    const {currentPWD, newPWD, confirmNewPwd} = passwords
+    const {password, newPWD, confirmNewPwd} = passwords
 
-    if (currentPWD === newPWD) throw new Error('new passowrd must not match current password');
+    if (password === newPWD) throw new Error('new passowrd must not match current password');
     if (newPWD !== confirmNewPwd) throw new Error ('new passwords don\'t match');
     if (newPWD.length < 8 || !validatePassword(newPWD)) throw new Error (`invalid new password`);
 

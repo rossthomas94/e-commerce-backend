@@ -6,11 +6,17 @@ const isAuth = (req, res, next) => {
 };
 
 const basicAuthLogin = (req, res, next) => {
-  console.log('basic auth')
-    if (!req.body.password) {
-      return res.status(400).json({ error: 'No password entered' });
-    }  
-    next()
+  console.log('basic auth');
+
+  if (req.originalUrl === '/login/password/forgotten') {
+    return next(); 
+  }
+
+  if (!req.body.password) {
+    return res.status(400).json({ error: 'No password entered' });
+  }
+
+  next();
 };
 
   const tokenAuth = async (req, res, next) => {

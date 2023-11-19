@@ -88,6 +88,7 @@ const deleteUserById = async (req, res) => {
 
 const attempLogin =  async (req, res) => {
   try {
+    console.log('attemp login')
     const email = req.params.email
     const {PersonID, password} = await getUserByEmail(email); 
     const login = await checkPasswords(password, req.body.password)
@@ -107,13 +108,13 @@ const attempLogin =  async (req, res) => {
 
 const resetPassword =  async (req, res) => {
   try {
-    const personId = checkUserInfo(req.body)
-    const updatedBody = createRandonPWD()
+    const {PersonID} = await getUserByEmail(req.body.email)
+    const updatedBody = await createRandonPWD()
     const PWD = updatedBody.string;
     delete updatedBody.string;
-    await updateUser(updatedBody, userId);
+    await updateUser(updatedBody, PersonID);
     res.status(200).json({
-      userId: personId,
+      userId: PersonID,
       newPassword: PWD
     });  
   } catch (error) {
@@ -124,7 +125,7 @@ const resetPassword =  async (req, res) => {
   }
 };
 
-const updatePassword = async (res, req) => {
+const updatePassword = async (req, res) => {
 
     try {
       const userId = req.params.userId
@@ -132,10 +133,10 @@ const updatePassword = async (res, req) => {
       if (!user) {
         return res.status(404).send('User not found');
       };
-      const {email, savedPWD  = password} = user;
-      const login = await checkPasswords(savedPWD, req.body.currentPWD)
+      const savedPWD = user.password;
+      const login = await checkPasswords(savedPWD, req.body.password)
       if (!login) return res.status(404).send('Password is incorrect');
-      const newPWD = validatePWD(req.body)
+      const newPWD = await validatePWD(req.body)
       const data = {"password": newPWD}
       await updateUser(data, userId);
       res.status(200).send('Passowrd updated successfully');

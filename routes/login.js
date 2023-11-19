@@ -13,7 +13,7 @@ router.route('/:email')
 router.route('/password/forgotten')
   .post(resetPassword);
 
-router.route('/password/update')
+router.route('/password/update/:userId')
   .patch(updatePassword);
 
     module.exports = router;

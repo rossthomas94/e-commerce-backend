@@ -1,4 +1,4 @@
-const {getAllCategories, getProductsInCategory, addNewProductToCategoryId, getProductInfo, updateProductInfoWithId, deleteProduct, getProductStockWithId ,filterProductsSearch, validateProductm, updateProductStockService } = require('../services/productManagement')
+const {getAllCategories, getProductsInCategory, addNewProductToCategoryId, getProductInfo, updateProductInfoWithId, deleteProduct, getProductStockWithId ,filterProductsSearch, validateProduct, updateProductStockService } = require('../services/productManagement')
 
 const showAllCategories = async(req, res) => {
     try {
@@ -98,8 +98,6 @@ const showAllCategories = async(req, res) => {
         const productId = req.params.productId;
         const {addStock} = req.body;
         if (typeof addStock !== 'number') throw new Error('invalid addStock value, must be a number');
-        console.log(productId);
-        console.log(addStock);
         const stock = await updateProductStockService(productId, addStock)
       res.status(200).send(stock);
       } catch (error) {
@@ -112,7 +110,6 @@ const showAllCategories = async(req, res) => {
 
   const filterProducts = async(req, res) => {
     try {
-      console.log(req.body.length)
       if (!req.body.length >= 1) throw new Error ("No filters selected!!")
       const filteredResult = await filterProductsSearch(req.body)
       res.status(200).send(filteredResult);
