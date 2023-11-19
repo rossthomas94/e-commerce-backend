@@ -1,5 +1,5 @@
-const {validateEmail, checkUserCred,  validatePassword ,securePassword, matchPasswords, updateTime} = require('../helpers/userValidation.js')
-const {insertNewUser, selectAllUsers, selectUserByUserId, updateUserById, deleteUserById, getUserIdByEmail } = require('../helpers/sqlController.js');
+const {validateEmail, checkUserCred,  validatePassword ,securePassword, matchPasswords, updateTime, generateRandomPassword} = require('../helpers/userValidation.js')
+const {insertNewUser, selectAllUsers, selectUserByUserId, updateUserById, deleteUserById, getUserIdByEmail, checkPasswordResetCond } = require('../helpers/sqlController.js');
 const {generateNewToken} = require('../helpers/tokenHandler.js')
 
 
@@ -62,6 +62,34 @@ const getToken = async (userId) => {
     return token
 }
 
+const checkUserInfo = async (data) => {
+    const {email, lastName, DOB} = data;
+   const personId =  checkPasswordResetCond(email, lastName, DOB);
+   if (!personId) throw new Error ('Creds dont match any records');
+   return personId;
+};
+
+const createRandonPWD = async () => {
+    const password = generateRandomPassword()
+    const hashPWD = await securePassword(password)
+    const data = {"password" : hashPWD,
+        "string":password }
+    return data
+};
+
+const validatePWD = async (passwords) => {
+    
+    const {currentPWD, newPWD, confirmNewPwd} = passwords
+
+    if (currentPWD === newPWD) throw new Error('new passowrd must not match current password');
+    if (newPWD !== confirmNewPwd) throw new Error ('new passwords don\'t match');
+    if (newPWD.length < 8 || !validatePassword(newPWD)) throw new Error (`invalid new password`);
+
+    const hashPWD = await securePassword(newPWD)
+    return hashPWD;
+};
+
+
 module.exports = {
     createNewUser,
     getAllUsers,
@@ -71,5 +99,8 @@ module.exports = {
     deleteUser,
     getUserByEmail,
     checkPasswords,
-    getToken
+    getToken,
+    checkUserInfo,
+    createRandonPWD,
+    validatePWD
 };

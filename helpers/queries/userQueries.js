@@ -14,6 +14,7 @@ const updateUser = (id) => `UPDATE user SET ? WHERE PersonID like '${id}';`
 
 const getUserByEmail = (email) =>  `SELECT PersonID, password FROM user WHERE email like '%${email}%'`
 
+const passwordReset = (email, lastName, DOB) => `SELECT PersonID FROM user WHERE email like '%${email}% AND LastName like '%${lastName}%' AND DOB like '%${DOB}%'`
 
 module.exports = {
     checkUserName,
@@ -23,5 +24,6 @@ module.exports = {
     getUserById,
     checkId,
     updateUser,
-    getUserByEmail
+    getUserByEmail,
+    passwordReset
 };

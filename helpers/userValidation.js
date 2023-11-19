@@ -43,7 +43,29 @@ const updateTime = (data) => {
   return data;
 };
 
+const generateRandomPassword = () => {
+  const upperChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lowerChars = 'abcdefghijklmnopqrstuvwxyz';
+  const numberChars = '0123456789';
   
+  let randomString = '';
+
+  randomString += upperChars.charAt(Math.floor(Math.random() * upperChars.length));
+
+  randomString += lowerChars.charAt(Math.floor(Math.random() * lowerChars.length));
+
+  randomString += numberChars.charAt(Math.floor(Math.random() * numberChars.length));
+
+  const remainingChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 5; i++) {
+      randomString += remainingChars.charAt(Math.floor(Math.random() * remainingChars.length));
+  }
+  
+  randomString = randomString.split('').sort(() => Math.random() - 0.5).join('');
+
+  return randomString;
+};
+
 
   module.exports = {
     validateEmail,
@@ -51,5 +73,6 @@ const updateTime = (data) => {
     securePassword,
     validatePassword,
     matchPasswords,
-    updateTime
+    updateTime,
+    generateRandomPassword, 
 };

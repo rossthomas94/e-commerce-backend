@@ -1,7 +1,8 @@
-const {checkUserName, checkUserEmail, insertUserData, getAllUsers, getUserById, checkId, updateUser, getUserByEmail} = require('./queries/userQueries');
+const {checkUserName, checkUserEmail, insertUserData, getAllUsers, getUserById, checkId, updateUser, getUserByEmail, passwordReset} = require('./queries/userQueries');
 const {runSelectQuery , runInsertQuery, runSelectByQuery, runUpdateUserQuery} = require('./sqlHandler');
 const uuid = require('uuid');
 
+const DB = "userInfo"
 
 const generateUniqueId = async (table, column) => {
   let unique = false;
@@ -9,7 +10,7 @@ const generateUniqueId = async (table, column) => {
 
   while (!unique) {
     id = uuid.v4();
-    const result = await runSelectQuery("userInfo", checkId(table,column, id));
+    const result = await runSelectQuery(DB, checkId(table,column, id));
     if (result.length === 0) unique = true;
   }
   return id;
@@ -18,7 +19,7 @@ const generateUniqueId = async (table, column) => {
 
 const checkUserNameExists = async (userName) => {
 
-  const result = await runSelectQuery("userInfo", checkUserName(userName));
+  const result = await runSelectQuery(DB, checkUserName(userName));
     if (result.length > 0) {
       throw new Error("UserName already exists");
     }
@@ -26,7 +27,7 @@ const checkUserNameExists = async (userName) => {
 };
 
 const checkUserEmailExists = async (userEmail) => {
-  const result = await runSelectQuery("userInfo", checkUserEmail(userEmail));
+  const result = await runSelectQuery(DB, checkUserEmail(userEmail));
   if (result.length > 0) {
     throw new Error('userEmail already exists');
   }
@@ -34,33 +35,38 @@ const checkUserEmailExists = async (userEmail) => {
 };
   
   const selectAllUsers = async () => {
-    const result =  await runSelectQuery("userInfo", getAllUsers());
+    const result =  await runSelectQuery(DB, getAllUsers());
     return result
   };
 
   const selectUserByUserId = async (id) => {
-    const result = await runSelectByQuery("userInfo", getUserById(id));
+    const result = await runSelectByQuery(DB, getUserById(id));
     return result 
   };
 
   const insertNewUser =  (data) => {
-    const result =  runInsertQuery(insertUserData(),  data,  'Create new user');
+    const result =  runInsertQuery(DB, insertUserData(),  data,  'Create new user');
     return result
   };
 
   const updateUserById =  (data, id) => {
-    const result =  runUpdateUserQuery("userInfo", updateUser(id), data);
+    const result =  runUpdateUserQuery(DB, updateUser(id), data);
     return result
   };
   const deleteUserById = (id, data) => {
-    const result =  runUpdateUserQuery("userInfo", updateUser(id), data);
+    const result =  runUpdateUserQuery(DB, updateUser(id), data);
     return result
   }
 
   const getUserIdByEmail = (email) => {
-    const result =  runSelectByQuery("userInfo", getUserByEmail(email));
+    const result =  runSelectByQuery(DB, getUserByEmail(email));
     return result
   }
+
+  const checkPasswordResetCond = (email, lastName, DOB) => {
+    const result =  runSelectByQuery(DB, passwordReset(email, lastName, DOB));
+    return result
+  };
 
 
   module.exports = {
@@ -72,5 +78,6 @@ const checkUserEmailExists = async (userEmail) => {
     generateUniqueId,
     updateUserById,
     deleteUserById,
-    getUserIdByEmail
+    getUserIdByEmail,
+    checkPasswordResetCond
 };

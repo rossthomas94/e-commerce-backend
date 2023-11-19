@@ -1,4 +1,4 @@
-const {createNewUser, getAllUsers, getUserById, validateUserData, updateUser, deleteUser, getUserByEmail, checkPasswords, getToken} = require('../services/users');
+const {createNewUser, getAllUsers, getUserById, validateUserData, updateUser, deleteUser, getUserByEmail, checkPasswords, getToken, createRandonPWD, validatePWD} = require('../services/users');
 
 
 
@@ -105,9 +105,47 @@ const attempLogin =  async (req, res) => {
   }
 }
 
-const resetPassword  =  async (req, res) => {
+const resetPassword =  async (req, res) => {
+  try {
+    const personId = checkUserInfo(req.body)
+    const updatedBody = createRandonPWD()
+    const PWD = updatedBody.string;
+    delete updatedBody.string;
+    await updateUser(updatedBody, userId);
+    res.status(200).json({
+      userId: personId,
+      newPassword: PWD
+    });  
+  } catch (error) {
+    res.status(500).send({
+      status: 'error',
+      message: error.message
+    });
+  }
+};
 
-}
+const updatePassword = async (res, req) => {
+
+    try {
+      const userId = req.params.userId
+      const user = await getUserById(userId); 
+      if (!user) {
+        return res.status(404).send('User not found');
+      };
+      const {email, savedPWD  = password} = user;
+      const login = await checkPasswords(savedPWD, req.body.currentPWD)
+      if (!login) return res.status(404).send('Password is incorrect');
+      const newPWD = validatePWD(req.body)
+      const data = {"password": newPWD}
+      await updateUser(data, userId);
+      res.status(200).send('Passowrd updated successfully');
+    } catch (error) {
+      res.status(500).send({
+        status: 'error',
+        message: error.message
+      });
+    }
+};
 
 module.exports = {
   createUser,
@@ -116,5 +154,6 @@ module.exports = {
   updateUserById,
   deleteUserById,
   attempLogin, 
-  resetPassword
+  resetPassword,
+  updatePassword
 };
