@@ -1,5 +1,7 @@
 const {getAllCategoryNamesHelp, getAllProductsInCategory, addNewProductHelp, getProductData, deleteProductData, updateProductData, getCurrentProductStock, updateStockInDB, getFilterd } = require('../helpers/sqlControllerPM')
 const {generatePId, configureFilters} = require('../helpers/validateProduct')
+const { updateProductStock } = require('../miscellaneous/productStock');
+
 const {NewProductObject} = require('../models/NewProductObject')
 
 const getAllCategories = async () => {
@@ -43,12 +45,13 @@ const updateProductStockService = async (PId, newStock) => {
     const updatedValue = inventory_count + newStock;
     const dataObject = {"inventory_count": updatedValue}
     const updateStock = await updateStockInDB(PId, dataObject)
+    await updateProductStock(PId)
     return updateStock;
 };
 
 const filterProductsSearch = async (data) => {
     const filter = configureFilters(data)
-    const filteredData = getFilterd(filter );
+    const filteredData = getFilterd(filter);
     return filteredData;
 };
 
@@ -56,7 +59,6 @@ const getProductStockWithId = async (PID) => {
     const stock = await getCurrentProductStock(PID);
     return stock;
 };
-
 
 module.exports =  {
     getAllCategories, 

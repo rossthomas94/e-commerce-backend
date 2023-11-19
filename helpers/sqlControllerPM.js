@@ -46,6 +46,11 @@ const getFilterd = async (filters) => {
     return result;
 };
 
-module.exports = {getAllCategoryNamesHelp, getAllProductsInCategory, addNewProductHelp, getProductData, deleteProductData, updateProductData, getCurrentProductStock, updateStockInDB, getFilterd}
+const getAllProductStock = async () => {
+    const result = runSelectQuery('productInfo', checkLowStock());
+    return result;
+};
+
+module.exports = {getAllCategoryNamesHelp, getAllProductsInCategory, addNewProductHelp, getProductData, deleteProductData, updateProductData, getCurrentProductStock, updateStockInDB, getFilterd, getAllProductStock}
 
 
