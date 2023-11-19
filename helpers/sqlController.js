@@ -60,7 +60,6 @@ const checkUserEmailExists = async (userEmail) => {
 
   const getUserIdByEmail = async (email) => {
     const result =  await runSelectByQuery(DB, getUserByEmail(email));
-    console.log(result)
     return result
   }
 

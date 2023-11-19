@@ -226,3 +226,23 @@ curl --location --request GET 'http://localhost:3000/productManagement/productQu
     "value": 10
 }
 ]'
+
+login/password/update/userId
+patch
+curl --location --request PATCH 'http://localhost:3000/login/password/update/6695bbf8-d81c-4d68-9b60-1c745e94f49d' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "password": "Test1234",
+    "newPWD": "Tast1234",
+    "confirmNewPwd": "Tast1234"
+}'
+
+/login/password/forgotten
+post
+curl --location --request POST 'http://localhost:3000/login/password/forgotten' \
+--header 'Authorization: Bearer KFhBFsOcR2pAKFB9Y6R0ShqDAKE02qo4' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email":"test@test.com"
+}'
